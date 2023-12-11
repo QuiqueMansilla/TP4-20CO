@@ -19,52 +19,54 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 SPDX-License-Identifier: MIT
 *************************************************************************************************/
 
-/** @file
+#ifndef GPIO_H
+#define GPIO_H
+
+/** @file main.h
  ** @brief Definición de la función principal del programa
  **/
 
-/* === Headers files inclusions =============================================================== */
+/* === Headers files inclusions ================================================================ */
+#include <stdint.h>
+#include <stdbool.h>
 
-#include "main.h"
-#include "gpio.h"
+/* === Cabecera C++ ============================================================================ */
 
-/* === Macros definitions ====================================================================== */
-#define GPIO_A 1
-#define GPIO_B 2
-#define PIN_3  3
-#define PIN_5  5
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-/* === Private data type declarations ========================================================== */
+/* === Public macros definitions =============================================================== */
 
-/* === Private variable declarations =========================================================== */
+typedef struct gpio_h * gpio_t;
 
-/* === Private function declarations =========================================================== */
+/* === Public data type declarations =========================================================== */
 
-/* === Public variable definitions ============================================================= */
+/* === Public variable declarations ============================================================ */
 
-/* === Private variable definitions ============================================================ */
+/* === Public function declarations ============================================================ */
 
-/* === Private function implementation ========================================================= */
-void Delay(void) {
-}
-/* === Public function implementation ========================================================== */
+gpio_t GpioCreate(uint8_t port, uint8_t bit);
 
-int main(void) {
-    gpio_t led_rojo;
-    gpio_t led_verde;
+void GpioSetDirection(gpio_t gpio, bool output);
 
-    led_rojo = GpioCreate(GPIO_A, PIN_3);
-    led_verde = GpioCreate(GPIO_B, PIN_5);
+bool GpioGetDirection(gpio_t gpio);
 
-    GpioSetDirection(led_rojo, true);
-    GpioSetState(led_rojo, true);
-    while (1) {
-        GpioSetState(led_rojo, false);
-        Delay();
-        GpioSetState(led_rojo, true);
-    }
+void GpioSetState(gpio_t gpio, bool state);
 
-    return 0;
-}
+/**
+ * @brief Función para consultar el estado de un puerto digital
+ *
+ * @param gpio puntero al objeto obtenido al llamar a la función GpioCreate
+ * @return true El puerto digital está encendido
+ * @return false El puerto digital está apagado
+ */
+bool GpioGetState(gpio_t gpio);
 
 /* === End of documentation ==================================================================== */
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* GPIO_H */
