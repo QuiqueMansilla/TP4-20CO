@@ -46,6 +46,13 @@ typedef struct gpio_h * gpio_t;
 
 /* === Public function declarations ============================================================ */
 
+/**
+ * @brief Función para crear un puerto digital
+ *
+ * @param port Numero de puerto GPIO correspondiente
+ * @return bit Numero de bit asignado al puerto
+ * @return gpio_t Puntero al objeto creado
+ */
 gpio_t GpioCreate(uint8_t port, uint8_t bit);
 
 void GpioSetDirection(gpio_t gpio, bool output);
